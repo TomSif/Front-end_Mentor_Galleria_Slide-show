@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+/* libre-baskerville-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: "Libre Baskerville";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../public/fonts/libre-baskerville-v24-latin-regular.woff2")
+    format("woff2");
+}
+/* libre-baskerville-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: "Libre Baskerville";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../public/fonts/libre-baskerville-v24-latin-700.woff2")
+    format("woff2");
+}
+
+@theme {
+  /* Fonts COLLECTION */
+  --font-Baskerville: "Libre Baskerville", serif;
+  /* VARIABLE COLLECTION */
+  --color-grey-100: #f3f3f3;
+  --color-grey-150: #e5e5e5;
+  --color-grey-200: #d8d8d8;
+  --color-grey-400: #7d7d7d;
+}
+
+/* Typography COLLECTION */
+
+@utility text-preset-1 {
+  font-family: var(--font-Baskerville);
+  font-weight: 400;
+  font-size: 12.5rem;
+  line-height: 115%;
+  letter-spacing: -0.001em;
+}
+@utility text-preset-1-mobile {
+  font-family: var(--font-Baskerville);
+  font-weight: 400;
+  font-size: 6.25rem;
+  line-height: 100%;
+  letter-spacing: 0em;
+}
+@utility text-preset-2 {
+  font-family: var(--font-Baskerville);
+  font-weight: 700;
+  font-size: 3.5rem;
+  line-height: 115%;
+  letter-spacing: 0em;
+}
+@utility text-preset-2-mobile {
+  font-family: var(--font-Baskerville);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 125%;
+  letter-spacing: 0em;
+}
+@utility text-preset-3 {
+  font-family: var(--font-Baskerville);
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 125%;
+  letter-spacing: 0em;
+}
+@utility text-preset-3-mobile {
+  font-family: var(--font-Baskerville);
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 200%;
+  letter-spacing: -0.0178em;
+}
+@utility text-preset-4 {
+  font-family: var(--font-Baskerville);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 135%;
+  letter-spacing: 0em;
+}
+@utility text-preset-4-mobile {
+  font-family: var(--font-Baskerville);
+  font-weight: 400;
+  font-size: 0.625rem;
+  line-height: 120%;
+  letter-spacing: 0em;
+}
+@utility text-preset-5 {
+  font-family: var(--font-Baskerville);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 125%;
+  letter-spacing: 0em;
+}
+@utility text-preset-5-mobile {
+  font-family: var(--font-Baskerville);
+  font-weight: 400;
+  font-size: 0.5625rem;
+  line-height: 125%;
+  letter-spacing: 0.22em;
+}
+@utility text-preset-6 {
+  font-family: var(--font-Baskerville);
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 125%;
+  letter-spacing: 0.21em;
+}
+@utility text-preset-7 {
+  font-family: var(--font-Baskerville);
+  font-weight: 700;
+  font-size: 0.625rem;
+  line-height: 120%;
+  letter-spacing: 0.2em;
+}
