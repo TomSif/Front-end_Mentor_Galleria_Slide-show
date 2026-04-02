@@ -6,8 +6,7 @@
   font-family: "Libre Baskerville";
   font-style: normal;
   font-weight: 400;
-  src: url("../public/fonts/libre-baskerville-v24-latin-regular.woff2")
-    format("woff2");
+  src: url("/fonts/libre-baskerville-v24-latin-regular.woff2") format("woff2");
 }
 /* libre-baskerville-700 - latin */
 @font-face {
@@ -15,8 +14,7 @@
   font-family: "Libre Baskerville";
   font-style: normal;
   font-weight: 700;
-  src: url("../public/fonts/libre-baskerville-v24-latin-700.woff2")
-    format("woff2");
+  src: url("/fonts/libre-baskerville-v24-latin-700.woff2") format("woff2");
 }
 
 @theme {
