@@ -3,7 +3,7 @@ import dataTyped from "../data";
 import Cards from "../components/Cards";
 import { getCorrectPath } from "../utils/generatePath";
 import solveMasonry from "../utils/solveMasonry";
-import useColumns from "../hooks/UseColumns";
+import useColumns from "../hooks/useColumns";
 
 const GAP = 40;
 
