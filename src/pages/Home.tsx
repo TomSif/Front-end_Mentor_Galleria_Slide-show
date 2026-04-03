@@ -1,24 +1,28 @@
+import { useMemo } from "react";
 import dataTyped from "../data";
 import Cards from "../components/Cards";
 import { getCorrectPath } from "../utils/generatePath";
+import solveMasonry from "../utils/solveMasonry";
+import useColumns from "../hooks/UseColumns";
 
-const COLS = 4;
+const GAP = 40;
 
 function Home() {
-  // Distribuer les items en round-robin dans 4 colonnes
-  const columns = Array.from({ length: COLS }, () => [] as typeof dataTyped);
+  const cols = useColumns();
 
-  dataTyped.forEach((card, i) => {
-    columns[i % COLS].push(card);
-  });
+  const columns = useMemo(
+    () =>
+      solveMasonry(dataTyped, (card) => card.images.thumbnailHeight, cols, GAP),
+    [cols],
+  );
 
   return (
-    <main className="w-full max-w-[1360px] px-6 flex flex-col items-center">
+    <main className="w-full max-w-340 px-6 flex flex-col items-center">
       <div className="flex gap-10 w-full">
         {columns.map((col, colIndex) => (
-          <ul key={colIndex} className="flex flex-col gap-10 flex-1 ">
+          <ul key={colIndex} className="flex flex-col gap-10 flex-1">
             {col.map((card) => (
-              <li key={card.name} className="w-full max-h-325">
+              <li key={card.name} className="w-full">
                 <Cards
                   name={card.name}
                   thumbnail={card.images.thumbnail}

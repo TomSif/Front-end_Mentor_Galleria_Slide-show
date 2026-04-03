@@ -12,6 +12,7 @@ export interface Images {
   thumbnail: string;
   hero: Hero;
   gallery: string;
+  thumbnailHeight: number;
 }
 
 export interface GalerieData {
