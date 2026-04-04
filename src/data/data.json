@@ -81,7 +81,7 @@
     "description": "The painting, in vertical format, shows a close-up view of Christ's disciples struggling frantically against the heavy storm to regain control of their fishing boat. A huge wave beats the bow and rips the sail. One of the disciples is seen vomiting over the side. Another one, looking directly out at the viewer, is a self-portrait of the artist. Only Christ, depicted on the right, remains calm.",
     "source": "https://en.wikipedia.org/wiki/The_Storm_on_the_Sea_of_Galilee",
     "artist": {
-      "image": "./assets/the-storm-on-the-sea-of-galilee/artist.jpg",
+      "image": "/assets/the-storm-on-the-sea-of-galilee/artist.jpg",
       "name": "Rembrandt"
     },
     "images": {
@@ -100,7 +100,7 @@
     "description": "The Great Wave off Kanagawa (Japanese: 神奈川沖浪裏, Hepburn: Kanagawa-oki Nami Ura, lit. \"Under the Wave off Kanagawa\"), also known as The Great Wave or simply The Wave, is a woodblock print by the Japanese ukiyo-e artist Hokusai. It was published sometime between 1829 and 1833 in the late Edo period as the first print in Hokusai's series Thirty-six Views of Mount Fuji. The image depicts an enormous wave threatening three boats off the coast in the Sagami Bay (Kanagawa Prefecture) while Mount Fuji rises in the background.",
     "source": "https://en.wikipedia.org/wiki/The_Great_Wave_off_Kanagawa",
     "artist": {
-      "image": "./assets/the-great-wave-off-kanagawa/artist.jpg",
+      "image": "/assets/the-great-wave-off-kanagawa/artist.jpg",
       "name": "Hokusai"
     },
     "images": {
