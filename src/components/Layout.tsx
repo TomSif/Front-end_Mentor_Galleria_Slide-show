@@ -3,7 +3,7 @@ import Header from "./Header";
 
 function Layout() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center max-w-full w-full">
       <Header />
       <Outlet />
     </div>
