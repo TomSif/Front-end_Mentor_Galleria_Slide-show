@@ -1,6 +1,10 @@
 import { Link } from "react-router";
+import { getCorrectPath } from "../utils/generatePath";
+
+import dataTyped from "../data";
 
 function Header() {
+  const firstArticle = getCorrectPath(dataTyped[0].name);
   return (
     <header className="p-6 flex justify-between items-center  border-b-2 border-b-grey-150 sticky top-0 w-full z-80 bg-white">
       <Link to="/" aria-label="Go to home page" className="w-auto">
@@ -17,9 +21,11 @@ function Header() {
           />
         </svg>
       </Link>
-      <span className="text-preset-5-mobile md:text-preset-6 ">
-        START SLIDESHOW
-      </span>
+      <Link to={`/article/${firstArticle}`} aria-label="">
+        <span className="text-preset-5-mobile md:text-preset-6 ">
+          START SLIDESHOW
+        </span>
+      </Link>
     </header>
   );
 }

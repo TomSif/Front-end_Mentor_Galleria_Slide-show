@@ -6,12 +6,12 @@ import dataTyped from "../data";
 function Article() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { slug } = useParams();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [isHeroSmall, setIsHeroSmall] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(
     location.state?.lightboxOpen ?? false,
   ); // location.state allow state of modal to be share between urls otherwise isOpen(false)
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const { slug } = useParams();
   //handle article Index
   const currentArticle = dataTyped.find(
     (article) => getCorrectPath(article.name) === slug,
