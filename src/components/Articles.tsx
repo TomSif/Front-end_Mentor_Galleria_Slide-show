@@ -1,13 +1,18 @@
-import { useParams, useNavigate } from "react-router";
-import { useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router";
+import { useState, useEffect, useRef } from "react";
 import { getCorrectPath } from "../utils/generatePath";
 import dataTyped from "../data";
 
 function Article() {
-  const [isHeroSmall, setIsHeroSmall] = useState<boolean>(true);
-  const { slug } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
-
+  const [isHeroSmall, setIsHeroSmall] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(
+    location.state?.lightboxOpen ?? false,
+  ); // location.state allow state of modal to be share between urls otherwise isOpen(false)
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const { slug } = useParams();
+  //handle article Index
   const currentArticle = dataTyped.find(
     (article) => getCorrectPath(article.name) === slug,
   );
@@ -18,19 +23,19 @@ function Article() {
   const progressionWidth = Math.round(
     ((currentArticleIndex + 1) / articlesLength) * 100,
   );
-
+  //handle navigation buttons
   function goBack() {
     const prevIndex =
       (currentArticleIndex - 1 + articlesLength) % articlesLength;
     const prevSlug = getCorrectPath(dataTyped[prevIndex].name);
-    navigate(`/article/${prevSlug}`);
+    navigate(`/article/${prevSlug}`, { state: { lightboxOpen: true } });
   }
   function goNext() {
     const nextIndex = (currentArticleIndex + 1) % articlesLength;
     const nextSlug = getCorrectPath(dataTyped[nextIndex].name);
-    navigate(`/article/${nextSlug}`);
+    navigate(`/article/${nextSlug}`, { state: { lightboxOpen: true } });
   }
-
+  //handle windows size
   useEffect(() => {
     const update = () => {
       const width = window.innerWidth;
@@ -41,13 +46,50 @@ function Article() {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
-
+  //handle hero size
   const heroImage = isHeroSmall
     ? currentArticle?.images.hero.small
     : currentArticle?.images.hero.large;
+  //handle show modal
+  useEffect(() => {
+    if (isOpen) dialogRef.current?.showModal();
+    else dialogRef.current?.close();
+  }, [isOpen]);
+  //handle arrows keyboards key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        goNext();
+      }
+      if (e.key === "ArrowLeft") {
+        goBack();
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [isOpen]);
 
   return (
     <>
+      <dialog
+        ref={dialogRef}
+        className="w-screen h-screen z-100 bg-black/85 flex items-center justify-center px-6 m-0 max-w-none max-h-none"
+      >
+        <div className="w-auto h-auto flex flex-col gap-4">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-preset-3-mobile text-white text-right"
+          >
+            CLOSE
+          </button>
+          <img
+            className="md:h-178 h-auto w-full  object-center object-contain"
+            src={currentArticle?.images.gallery}
+            alt={currentArticle?.name}
+          />
+        </div>
+      </dialog>
       <main className="flex flex-col  items-center justify-center w-full p-6 md:p-10  xl:flex-row lg:mt-24 lg:gap-6 2xl:gap-36 2xl:px-24 xl:h-156 ">
         <section className="Image_Container md:flex md:flex-row  w-full 2xl:w-[50vw] xl:h-156">
           <div className="Painting_Container relative w-81.75 h-70 md:w-118.75 md:h-140">
@@ -56,7 +98,10 @@ function Article() {
               src={heroImage}
               alt={currentArticle?.name}
             />
-            <button className="text-white flex gap-4 p-4 w-auto text-preset-7 bg-black absolute top-4 left-4 md:bottom-4 md:top-auto md:left-4  z-40">
+            <button
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="text-white flex gap-4 p-4 w-auto text-preset-7 bg-black absolute top-4 left-4 md:bottom-4 md:top-auto md:left-4  z-40"
+            >
               <img
                 src="/assets/shared/icon-view-image.svg"
                 alt=""

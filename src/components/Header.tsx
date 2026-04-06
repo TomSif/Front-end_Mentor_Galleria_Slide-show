@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 function Header() {
   return (
-    <header className="p-6 flex justify-between items-center  border-b-2 border-b-grey-150 sticky top-0 w-full z-100 bg-white">
+    <header className="p-6 flex justify-between items-center  border-b-2 border-b-grey-150 sticky top-0 w-full z-80 bg-white">
       <Link to="/" aria-label="Go to home page" className="w-auto">
         <svg
           className="h-8 lg:h-12 w-auto"
