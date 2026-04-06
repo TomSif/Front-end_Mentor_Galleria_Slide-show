@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { getCorrectPath } from "../utils/generatePath";
 import dataTyped from "../data";
@@ -6,9 +6,30 @@ import dataTyped from "../data";
 function Article() {
   const [isHeroSmall, setIsHeroSmall] = useState<boolean>(true);
   const { slug } = useParams();
+  const navigate = useNavigate();
+
   const currentArticle = dataTyped.find(
     (article) => getCorrectPath(article.name) === slug,
   );
+  const currentArticleIndex = dataTyped.findIndex(
+    (article) => getCorrectPath(article.name) === slug,
+  );
+  const articlesLength = dataTyped.length;
+  const progressionWidth = Math.round(
+    ((currentArticleIndex + 1) / articlesLength) * 100,
+  );
+
+  function goBack() {
+    const prevIndex =
+      (currentArticleIndex - 1 + articlesLength) % articlesLength;
+    const prevSlug = getCorrectPath(dataTyped[prevIndex].name);
+    navigate(`/article/${prevSlug}`);
+  }
+  function goNext() {
+    const nextIndex = (currentArticleIndex + 1) % articlesLength;
+    const nextSlug = getCorrectPath(dataTyped[nextIndex].name);
+    navigate(`/article/${nextSlug}`);
+  }
 
   useEffect(() => {
     const update = () => {
@@ -26,55 +47,91 @@ function Article() {
     : currentArticle?.images.hero.large;
 
   return (
-    <main className="flex flex-col  justify-center w-full p-6 md:p-10  xl:flex-row lg:pt-24 lg:pb-20 lg:gap-6">
-      <section className="Image_Container md:flex md:flex-row">
-        <div className="Painting_Container relative lg:w-118.75 max-w-118.75 xl:h-140">
-          <img src={heroImage} alt={currentArticle?.name} />
-          <button className="text-white flex gap-4 p-4 w-auto text-preset-7 bg-black absolute top-4 left-4 md:bottom-4 md:top-auto md:left-4  z-40">
+    <>
+      <main className="flex flex-col  items-center justify-center w-full p-6 md:p-10  xl:flex-row lg:mt-24 lg:gap-6 2xl:gap-36 2xl:px-24 xl:h-156 ">
+        <section className="Image_Container md:flex md:flex-row  w-full 2xl:w-[50vw] xl:h-156">
+          <div className="Painting_Container relative w-81.75 h-70 md:w-118.75 md:h-140">
             <img
-              src="/assets/shared/icon-view-image.svg"
-              alt=""
-              className="w-3 h-3 "
+              className="h-full w-full  object-center object-cover"
+              src={heroImage}
+              alt={currentArticle?.name}
             />
-            VIEW IMAGE
-          </button>
-        </div>
-        <div className="Images_Description  -mt-8  md:mt-0 relative z-20">
-          <div className="Description_Content bg-white p-6 w-70.5 md:-ml-58 md:w-111 md:p-0 md:pl-16 md:pb-16 xl:-ml-18">
-            <h1 className="text-preset-2-mobile md:text-preset-2 text-black   text-balance ">
-              {currentArticle?.name}
-            </h1>
-            <h2 className="text-preset-4 text-grey-400 pt-2">
-              {currentArticle?.artist.name}
-            </h2>
+            <button className="text-white flex gap-4 p-4 w-auto text-preset-7 bg-black absolute top-4 left-4 md:bottom-4 md:top-auto md:left-4  z-40">
+              <img
+                src="/assets/shared/icon-view-image.svg"
+                alt=""
+                className="w-3 h-3 "
+              />
+              VIEW IMAGE
+            </button>
           </div>
-          <div className="Thumbnails_Container w-full px-4 md:px-6.75 xl:pt-49">
-            <img
-              className="Description_Thumbnails w-16 h-16 md:w-32 md:h-32 aspect-square object-contain  "
-              src={currentArticle?.artist.image}
-              alt={currentArticle?.artist.name}
-            />
+          <div className="Images_Description  -mt-8  md:mt-0 relative z-20 2xl:w-[20vw]">
+            <div className="Description_Content bg-white p-6 w-70.5 md:-ml-58 md:w-111 md:p-0 md:pl-16 md:pb-16 xl:-ml-18  xl:relative">
+              <h1 className="text-preset-2-mobile md:text-preset-2 text-black   text-balance ">
+                {currentArticle?.name}
+              </h1>
+              <h2 className="text-preset-4 text-grey-400 pt-2">
+                {currentArticle?.artist.name}
+              </h2>
+            </div>
+            <div className="Thumbnails_Container w-full px-4 md:px-6.75 lg:absolute lg:bottom-0">
+              <img
+                className="Description_Thumbnails w-16 h-16 md:w-32 md:h-32 aspect-square object-contain  "
+                src={currentArticle?.artist.image}
+                alt={currentArticle?.artist.name}
+              />
+            </div>
           </div>
-        </div>
-      </section>
-      <section className="Detail_Container relative -mt-8 md:mt-16 xl:mt-0 xl:pt-27.5 w-full">
-        <p className="Year text-preset-1-mobile md:text-preset-1 text-grey-100 w-full text-right md:text-left  absolute top-0 right-0 md:right-auto md:left-0 xl:top-7 z-30">
-          {currentArticle?.year}
-        </p>
-        <div className="Additionnal_Info_Container relative py-16 z-40 md:mx-auto md:w-114 xl:w-87.5 xl:mx-0">
-          <p className="text-preset-3-mobile text-grey-400 text-left pb-16 md:pb-10">
-            {currentArticle?.description}
+        </section>
+        <section className="Detail_Container relative -mt-8 md:mt-16 xl:mt-0 xl:pt-27.5 w-full">
+          <p className="Year text-preset-1-mobile md:text-preset-1 text-grey-100 w-full text-right md:text-left  absolute top-0 right-0 md:right-auto md:left-0 xl:top-7 z-30">
+            {currentArticle?.year}
           </p>
-          <a
-            href={currentArticle?.source}
-            aria-label="Go to home page"
-            className="w-auto text-preset-5-mobile  text-grey-400 "
-          >
-            GO TO SOURCE
-          </a>
+          <div className="Additionnal_Info_Container relative py-16 z-40 md:mx-auto md:w-114 xl:w-87.5 xl:mx-0">
+            <p className="text-preset-3-mobile text-grey-400 text-left pb-16 md:pb-10">
+              {currentArticle?.description}
+            </p>
+            <a
+              href={currentArticle?.source}
+              aria-label="Go to home page"
+              className="w-auto text-preset-5-mobile  text-grey-400 "
+            >
+              GO TO SOURCE
+            </a>
+          </div>
+        </section>
+      </main>
+      <footer className="border-t w-full border-grey-150 mt-19.5 md:mt-14 xl:mt-20">
+        <div
+          className="Progession-bar  border-t h-1 border-black -mt-px"
+          style={{ width: `${progressionWidth}%` }}
+        ></div>
+        <div className="Footer_Container flex justify-between items-center w-full px-6 py-4">
+          <div className="Footer_Description w-full">
+            <h3 className="text-preset-3-mobile text-black text-left">
+              {currentArticle?.name}
+            </h3>
+            <h4 className="text-preset-4-mobile text-black/75">
+              {currentArticle?.artist.name}
+            </h4>
+          </div>
+          <div className="Footer_Navigation w-auto flex gap-6">
+            <button onClick={() => goBack()} className="w-4 h-4">
+              <img
+                src="/assets/shared/icon-back-button.svg"
+                alt="icon back button"
+              />
+            </button>
+            <button onClick={() => goNext()} className="w-4 h-4">
+              <img
+                src="/assets/shared/icon-next-button.svg"
+                alt="icon next button"
+              />
+            </button>
+          </div>
         </div>
-      </section>
-    </main>
+      </footer>
+    </>
   );
 }
 
