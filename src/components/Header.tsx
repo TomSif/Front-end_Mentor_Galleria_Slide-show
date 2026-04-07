@@ -35,7 +35,7 @@ function Header({ isPlaying, setIsPlaying }: HeaderProps) {
             navigate(`/article/${firstArticle}`);
             setIsPlaying(true);
           }}
-          className="text-preset-5-mobile md:text-preset-6 hover:text-black hover:cursor-pointer text-grey-400"
+          className="text-preset-5-mobile md:text-preset-6 hover:text-black hover:cursor-pointer text-grey-400 transition-colors ease-in-out duration-500 "
         >
           START SLIDESHOW
         </button>
@@ -44,7 +44,7 @@ function Header({ isPlaying, setIsPlaying }: HeaderProps) {
           onClick={() => {
             setIsPlaying(false);
           }}
-          className="text-preset-5-mobile md:text-preset-6 hover:text-black hover:cursor-pointer text-grey-400"
+          className="text-preset-5-mobile md:text-preset-6 hover:text-black hover:cursor-pointer text-grey-400 transition-colors ease-in-out duration-500 "
         >
           STOP SLIDESHOW
         </button>

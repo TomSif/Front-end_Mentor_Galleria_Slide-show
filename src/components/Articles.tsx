@@ -122,12 +122,20 @@ function Article() {
           animate={{
             x: 0,
             opacity: 1,
-            transition: { duration: 0.4, ease: "easeInOut" },
+            transition: { duration: 0.45, ease: "easeInOut" },
           }}
           exit={
             location.state?.isDirectionRight
-              ? { x: "100%", transition: { duration: 0.4, ease: "easeInOut" } }
-              : { x: "-100%", transition: { duration: 0.4, ease: "easeInOut" } }
+              ? {
+                  x: "100%",
+                  opacity: 0.3,
+                  transition: { duration: 0.35, ease: "easeOut" },
+                }
+              : {
+                  x: "-100%",
+                  opacity: 0.3,
+                  transition: { duration: 0.3, ease: "easeInOut" },
+                }
           }
         >
           <section className="Image_Container md:flex md:flex-row  w-full 2xl:w-[50vw] xl:h-156">
@@ -139,12 +147,12 @@ function Article() {
               />
               <button
                 onClick={() => setIsOpen((prev) => !prev)}
-                className="text-white flex gap-4 p-4 w-auto text-preset-7 bg-black absolute top-4 left-4 md:bottom-4 md:top-auto md:left-4  z-40 "
+                className="text-white flex gap-4 p-4 w-auto text-preset-7 cursor-pointer bg-black absolute top-4 left-4 md:bottom-4 md:top-auto md:left-4  z-40 hover:bg-white/25 transition-colors ease-in-out duration-500 "
               >
                 <img
                   src="/assets/shared/icon-view-image.svg"
                   alt=""
-                  className="w-3 h-3 "
+                  className="w-3 h-3 View_Icon"
                 />
                 VIEW IMAGE
               </button>
@@ -178,7 +186,7 @@ function Article() {
               <a
                 href={currentArticle?.source}
                 aria-label="Go to home page"
-                className="w-auto text-preset-5-mobile  text-grey-400 "
+                className="w-auto text-preset-5-mobile  text-grey-400 hover:text-black transition-colors duration-300"
               >
                 GO TO SOURCE
               </a>
@@ -206,12 +214,14 @@ function Article() {
               <img
                 src="/assets/shared/icon-back-button.svg"
                 alt="icon back button"
+                className="Back_Button"
               />
             </button>
             <button onClick={() => goNext()} className="w-4 h-4">
               <img
                 src="/assets/shared/icon-next-button.svg"
                 alt="icon next button"
+                className="Next_Button"
               />
             </button>
           </div>
