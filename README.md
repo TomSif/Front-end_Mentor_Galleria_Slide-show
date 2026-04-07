@@ -11,7 +11,7 @@
 [![React Router](https://img.shields.io/badge/react_router_v7-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)](https://reactrouter.com/)
 [![Framer Motion](https://img.shields.io/badge/framer_motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
 
-![Design preview for the Galleria Slideshow Site coding challenge](/screenshot-home.jpg)
+![Design preview for the Galleria Slideshow Site coding challenge](./public/screenshot-home.png)
 
 ### 🌐 Live Demo:
 
@@ -48,7 +48,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](/screenshot.jpg)
+![](./public/screenshot.png)
 
 ### Links
 
