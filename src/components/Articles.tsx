@@ -114,7 +114,7 @@ function Article() {
       </dialog>
       <AnimatePresence mode="wait">
         <motion.main
-          className="flex flex-col  items-center justify-center w-full p-6 md:p-10  xl:flex-row lg:mt-24 lg:gap-6 2xl:gap-36 2xl:px-24 xl:h-156 "
+          className="flex flex-col  items-center justify-center w-full p-6 md:p-10  xl:flex-row xl:mt-24 lg:gap-6 2xl:gap-36 2xl:px-24 xl:h-156 max-w-93.75 md:max-w-3xl xl:max-w-360 "
           key={slug}
           initial={
             location.state?.isDirectionRight ? { x: "-100%" } : { x: "100%" }
@@ -195,7 +195,7 @@ function Article() {
         </motion.main>
       </AnimatePresence>
 
-      <footer className="border-t w-full border-grey-150 mt-19.5 md:mt-14 xl:mt-20">
+      <footer className="border-t w-full border-grey-150 mt-19.5 md:mt-14 xl:mt-10">
         <div
           className="Progession-bar  border-t h-1 border-black -mt-px"
           style={{ width: `${progressionWidth}%` }}
