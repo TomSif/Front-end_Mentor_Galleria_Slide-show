@@ -117,3 +117,40 @@
 dialog:not([open]) {
   display: none;
 }
+/* Custom css CARDS */
+.card {
+  position: relative;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+  overflow: hidden;
+}
+.card:hover,
+.card:active,
+.card:focus {
+  transform: translateY(-5px);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.516) 0%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.card:hover .overlay {
+  opacity: 1;
+}
+.card_img {
+  transition: transform 0.75s ease;
+}
+.card:hover .card_img {
+  transform: scale(1.1);
+}

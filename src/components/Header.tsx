@@ -1,10 +1,18 @@
-import { Link } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
+import type { Dispatch, SetStateAction } from "react";
 import { getCorrectPath } from "../utils/generatePath";
 
 import dataTyped from "../data";
 
-function Header() {
+interface HeaderProps {
+  isPlaying: boolean;
+  setIsPlaying: Dispatch<SetStateAction<boolean>>;
+}
+function Header({ isPlaying, setIsPlaying }: HeaderProps) {
+  const location = useLocation();
+  const navigate = useNavigate();
   const firstArticle = getCorrectPath(dataTyped[0].name);
+
   return (
     <header className="p-6 flex justify-between items-center  border-b-2 border-b-grey-150 sticky top-0 w-full z-80 bg-white">
       <Link to="/" aria-label="Go to home page" className="w-auto">
@@ -21,11 +29,26 @@ function Header() {
           />
         </svg>
       </Link>
-      <Link to={`/article/${firstArticle}`} aria-label="">
-        <span className="text-preset-5-mobile md:text-preset-6 ">
+      {!isPlaying || !location.pathname.startsWith("/article") ? (
+        <button
+          onClick={() => {
+            navigate(`/article/${firstArticle}`);
+            setIsPlaying(true);
+          }}
+          className="text-preset-5-mobile md:text-preset-6 hover:text-black hover:cursor-pointer text-grey-400"
+        >
           START SLIDESHOW
-        </span>
-      </Link>
+        </button>
+      ) : (
+        <button
+          onClick={() => {
+            setIsPlaying(false);
+          }}
+          className="text-preset-5-mobile md:text-preset-6 hover:text-black hover:cursor-pointer text-grey-400"
+        >
+          STOP SLIDESHOW
+        </button>
+      )}
     </header>
   );
 }

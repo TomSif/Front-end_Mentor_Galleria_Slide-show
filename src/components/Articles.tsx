@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate, useLocation } from "react-router";
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+  useOutletContext,
+} from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { getCorrectPath } from "../utils/generatePath";
 import dataTyped from "../data";
@@ -14,6 +19,7 @@ function Article() {
     location.state?.lightboxOpen ?? false,
   ); // location.state allow state of modal to be share between urls otherwise isOpen(false)
   //handle article Index
+  const { isPlaying } = useOutletContext<{ isPlaying: boolean }>();
   const currentArticle = dataTyped.find(
     (article) => getCorrectPath(article.name) === slug,
   );
@@ -73,8 +79,18 @@ function Article() {
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, currentArticleIndex]);
+  // function slideshow
+  useEffect(() => {
+    if (!isPlaying) return;
+    const interval = setInterval(() => {
+      const nextIndex = (currentArticleIndex + 1) % articlesLength;
+      const nextSlug = getCorrectPath(dataTyped[nextIndex].name);
+      navigate(`/article/${nextSlug}`, { state: { isDirectionRight: true } });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isPlaying, currentArticleIndex, articlesLength, navigate]);
 
   return (
     <>
@@ -123,7 +139,7 @@ function Article() {
               />
               <button
                 onClick={() => setIsOpen((prev) => !prev)}
-                className="text-white flex gap-4 p-4 w-auto text-preset-7 bg-black absolute top-4 left-4 md:bottom-4 md:top-auto md:left-4  z-40"
+                className="text-white flex gap-4 p-4 w-auto text-preset-7 bg-black absolute top-4 left-4 md:bottom-4 md:top-auto md:left-4  z-40 "
               >
                 <img
                   src="/assets/shared/icon-view-image.svg"
