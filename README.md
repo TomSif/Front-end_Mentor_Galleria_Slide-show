@@ -1,9 +1,9 @@
 # Galleria Slideshow Site - Thomas Sifferle 🖼️
 
-![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)
-![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)
-![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)
-[![forthebadge](https://forthebadge.com/images/badges/uses-git.svg)](https://github.com/TomSif)
+![forthebadge](https://forthebadge.com/api/badges/generate?primaryLabel=USES&secondaryLabel=HTML)
+![forthebadge](https://forthebadge.com/api/badges/generate?primaryLabel=USES&secondaryLabel=CSS)
+![forthebadge](https://forthebadge.com/api/badges/generate?primaryLabel=USES&secondaryLabel=JS)
+[![forthebadge](https://forthebadge.com/api/badges/generate?primaryLabel=USES&secondaryLabel=GIT)](https://github.com/TomSif)
 [![React](https://img.shields.io/badge/react_19-20232a?style=for-the-badge&logo=react&logocolor=61dafb)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/vite-646cff?style=for-the-badge&logo=vite&logocolor=white)](https://vitejs.dev/)
 [![Tailwind](https://img.shields.io/badge/tailwindcss_v4-0F172A?&logo=tailwindcss&logocolor=white)](https://tailwindcss.com/)
@@ -11,7 +11,7 @@
 [![React Router](https://img.shields.io/badge/react_router_v7-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)](https://reactrouter.com/)
 [![Framer Motion](https://img.shields.io/badge/framer_motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
 
-![Design preview for the Galleria Slideshow Site coding challenge](./screenshot-home.jpg)
+![Design preview for the Galleria Slideshow Site coding challenge](/screenshot-home.jpg)
 
 ### 🌐 Live Demo:
 
@@ -48,7 +48,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![](/screenshot.jpg)
 
 ### Links
 
