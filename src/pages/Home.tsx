@@ -29,7 +29,7 @@ function Home() {
   );
 
   return (
-    <main className="w-full max-w-340 px-6 flex flex-col items-center">
+    <main className="w-full h-full pb-8 max-w-340 px-6 flex flex-col items-center">
       <div className="flex gap-10 w-full">
         {columns.map((col, colIndex) => (
           <motion.ul
