@@ -122,19 +122,19 @@ function Article() {
           animate={{
             x: 0,
             opacity: 1,
-            transition: { duration: 0.45, ease: "easeInOut" },
+            transition: { duration: 0.3, ease: "easeInOut" },
           }}
           exit={
             location.state?.isDirectionRight
               ? {
                   x: "100%",
                   opacity: 0.3,
-                  transition: { duration: 0.35, ease: "easeOut" },
+                  transition: { duration: 0.25, ease: "easeIn" },
                 }
               : {
                   x: "-100%",
                   opacity: 0.3,
-                  transition: { duration: 0.3, ease: "easeInOut" },
+                  transition: { duration: 0.25, ease: "easeIn" },
                 }
           }
         >
