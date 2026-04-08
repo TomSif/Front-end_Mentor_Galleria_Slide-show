@@ -32,7 +32,11 @@ function Header({ isPlaying, setIsPlaying }: HeaderProps) {
       {!isPlaying || !location.pathname.startsWith("/article") ? (
         <button
           type="button"
-          aria-controls="gallery-slideshow"
+          aria-controls={
+            !location.pathname.startsWith("/article")
+              ? undefined
+              : "gallery-slideshow"
+          }
           onClick={() => {
             navigate(`/article/${firstArticle}`);
             setIsPlaying(true);
