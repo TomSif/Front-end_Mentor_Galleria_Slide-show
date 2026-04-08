@@ -20,7 +20,7 @@ function Cards({ name, thumbnail, artistName, path }: CardsProps) {
       />
       <div className="overlay"></div>
       <div className="flex flex-col gap-2 items-start text-left absolute left-8 bottom-8">
-        <strong className="text-preset-2-mobile text-white">{name}</strong>
+        <h2 className="text-preset-2-mobile text-white">{name}</h2>
         <span className="text-preset-5 text-white/75">{artistName}</span>
       </div>
     </Link>

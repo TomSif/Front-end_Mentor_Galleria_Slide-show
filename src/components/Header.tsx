@@ -31,6 +31,8 @@ function Header({ isPlaying, setIsPlaying }: HeaderProps) {
       </Link>
       {!isPlaying || !location.pathname.startsWith("/article") ? (
         <button
+          type="button"
+          aria-controls="gallery-slideshow"
           onClick={() => {
             navigate(`/article/${firstArticle}`);
             setIsPlaying(true);
@@ -41,6 +43,8 @@ function Header({ isPlaying, setIsPlaying }: HeaderProps) {
         </button>
       ) : (
         <button
+          type="button"
+          aria-controls="gallery-slideshow"
           onClick={() => {
             setIsPlaying(false);
           }}

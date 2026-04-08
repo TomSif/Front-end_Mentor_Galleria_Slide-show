@@ -30,7 +30,9 @@ function Home() {
 
   return (
     <main className="w-full h-full pb-8 max-w-340 px-6 flex flex-col items-center">
+      <h1 className="sr-only">A collection of the most famous paintings</h1>
       <div className="flex gap-10 w-full">
+        {/* A11y has been sacrified for design purpose, one ul would have been a better semantic structure */}
         {columns.map((col, colIndex) => (
           <motion.ul
             variants={containerVariants}
