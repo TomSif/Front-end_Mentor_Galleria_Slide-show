@@ -235,7 +235,6 @@ function Article() {
                 </p>
                 <a
                   href={currentArticle?.source}
-                  aria-label="Go to home page"
                   className="w-auto text-preset-5-mobile  text-grey-400 hover:text-black transition-colors duration-300"
                 >
                   GO TO SOURCE
@@ -260,14 +259,24 @@ function Article() {
               </h4>
             </div>
             <div className="Footer_Navigation w-auto flex gap-6">
-              <button onClick={() => goBack()} className="w-4 h-4">
+              <button
+                type="button"
+                aria-label="previous painting"
+                onClick={() => goBack()}
+                className="w-4 h-4"
+              >
                 <img
                   src="/assets/shared/icon-back-button.svg"
                   alt="icon back button"
                   className="Back_Button"
                 />
               </button>
-              <button onClick={() => goNext()} className="w-4 h-4">
+              <button
+                type="button"
+                aria-label="next painting"
+                onClick={() => goNext()}
+                className="w-4 h-4"
+              >
                 <img
                   src="/assets/shared/icon-next-button.svg"
                   alt="icon next button"
