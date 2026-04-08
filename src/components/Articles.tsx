@@ -1,3 +1,26 @@
+/**
+ * DIRECTIONAL ANIMATION ARCHITECTURE — Session 11
+ *
+ * Problem solved: rapid navigation (goBack → goNext) caused animation glitches
+ * because exit direction was shared and mutated across instances.
+ *
+ * Solution:
+ * - SlideWrapper = wrapper component around motion.main (per-instance isolation)
+ * - enterDir = frozen at mount via useState + location.state (previous click's direction)
+ * - exitDir = dynamic prop from parent Article (current click's direction)
+ *
+ * Mechanism: When you click goBack:
+ *   1. setExitDir(false) → current instance knows it exits leftward
+ *   2. navigate({state: {isDirectionRight: false}}) → new instance will inherit
+ *      this direction for entry (frozen at SlideWrapper mount)
+ *   3. mode="wait" orchestrated by AnimatePresence keeps both instances alive
+ *
+ * Limitation: ultra-fast navigation (click before animation ends) may cause
+ * exitDir to be re-read during animation. Edge case; mode="sync" + position:absolute
+ * would solve it, but complicates UX and debugging.
+ *
+ * See progression.md Session 11 for full analysis of React cycles and timing.
+ */
 import { useState, useEffect, useRef } from "react";
 import {
   useParams,
@@ -9,11 +32,44 @@ import { AnimatePresence, motion } from "framer-motion";
 import { getCorrectPath } from "../utils/generatePath";
 import dataTyped from "../data";
 
+interface SlideWrapperProps {
+  exitDir: boolean;
+  className: string;
+  children: React.ReactNode;
+}
+
+function SlideWrapper({ exitDir, className, children }: SlideWrapperProps) {
+  const location = useLocation();
+  // Frozen at mount: direction of the navigation that brought us HERE
+  const [enterDir] = useState<boolean>(
+    () => location.state?.isDirectionRight ?? true,
+  );
+  return (
+    <motion.main
+      className={className}
+      initial={{ x: enterDir ? "-100%" : "100%" }}
+      animate={{
+        x: 0,
+        opacity: 1,
+        transition: { duration: 0.3, ease: "easeInOut" },
+      }}
+      exit={{
+        x: exitDir ? "100%" : "-100%",
+        opacity: 0.3,
+        transition: { duration: 0.25, ease: "easeIn" },
+      }}
+    >
+      {children}
+    </motion.main>
+  );
+}
+
 function Article() {
   const location = useLocation();
   const navigate = useNavigate();
   const { slug } = useParams();
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const [exitDir, setExitDir] = useState<boolean>(true);
   const [isHeroSmall, setIsHeroSmall] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(
     location.state?.lightboxOpen ?? false,
@@ -35,6 +91,7 @@ function Article() {
     const prevIndex =
       (currentArticleIndex - 1 + articlesLength) % articlesLength;
     const prevSlug = getCorrectPath(dataTyped[prevIndex].name);
+    setExitDir(false);
     navigate(`/article/${prevSlug}`, {
       state: { lightboxOpen: true, isDirectionRight: false },
     });
@@ -42,6 +99,7 @@ function Article() {
   function goNext() {
     const nextIndex = (currentArticleIndex + 1) % articlesLength;
     const nextSlug = getCorrectPath(dataTyped[nextIndex].name);
+    setExitDir(true);
     navigate(`/article/${nextSlug}`, {
       state: { lightboxOpen: true, isDirectionRight: true },
     });
@@ -87,6 +145,7 @@ function Article() {
     const interval = setInterval(() => {
       const nextIndex = (currentArticleIndex + 1) % articlesLength;
       const nextSlug = getCorrectPath(dataTyped[nextIndex].name);
+      setExitDir(true);
       navigate(`/article/${nextSlug}`, { state: { isDirectionRight: true } });
     }, 3000);
     return () => clearInterval(interval);
@@ -113,30 +172,10 @@ function Article() {
         </div>
       </dialog>
       <AnimatePresence mode="wait">
-        <motion.main
-          className="flex flex-col  items-center justify-center w-full p-6 md:p-10  xl:flex-row xl:mt-24 lg:gap-6 2xl:gap-36 2xl:px-24 xl:h-156 max-w-93.75 md:max-w-3xl xl:max-w-360 "
+        <SlideWrapper
           key={slug}
-          initial={
-            location.state?.isDirectionRight ? { x: "-100%" } : { x: "100%" }
-          }
-          animate={{
-            x: 0,
-            opacity: 1,
-            transition: { duration: 0.3, ease: "easeInOut" },
-          }}
-          exit={
-            location.state?.isDirectionRight
-              ? {
-                  x: "100%",
-                  opacity: 0.3,
-                  transition: { duration: 0.25, ease: "easeIn" },
-                }
-              : {
-                  x: "-100%",
-                  opacity: 0.3,
-                  transition: { duration: 0.25, ease: "easeIn" },
-                }
-          }
+          exitDir={exitDir}
+          className="flex flex-col  items-center justify-center w-full p-6 md:p-10  xl:flex-row xl:mt-24 lg:gap-6 2xl:gap-36 2xl:px-24 xl:h-156 max-w-93.75 md:max-w-3xl xl:max-w-360 "
         >
           <section className="Image_Container md:flex md:flex-row  w-full 2xl:w-[50vw] xl:h-156">
             <div className="Painting_Container relative w-81.75 h-70 md:w-118.75 md:h-140">
@@ -192,7 +231,7 @@ function Article() {
               </a>
             </div>
           </section>
-        </motion.main>
+        </SlideWrapper>
       </AnimatePresence>
 
       <footer className="border-t w-full border-grey-150 mt-19.5 md:mt-14 xl:mt-10">

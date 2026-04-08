@@ -99,6 +99,23 @@ Instead of building a custom modal with portals and manual focus trapping, I use
 
 Key takeaway: `AnimatePresence` should wrap only the animated element (here `<motion.main>` with a `key` based on the slug), not the entire app. Each animation prop (`initial`, `animate`, `exit`) needs its own `transition` — putting it only in `animate` won't apply to `exit`. Stagger animations on the homepage cards used `variants` with `staggerChildren` on the parent `motion.ul`.
 
+#### Animation architecture under pressure — from glitch to React lifecycle mastery
+
+Late in the project, I encountered a visual glitch in the slideshow: navigating rapidly (e.g., back → forward) caused animation direction to flip mid-transition. It seemed cosmetic at first, but it exposed an architectural problem I couldn't solve alone.
+
+**The problem:** Exit direction was being shared and mutated across component instances via a mutable ref, causing state corruption when navigation happened during animation.
+
+**The insight:** I realized I needed help, requested AI-assisted debugging, and that's when it clicked — I needed to separate concerns: **entry direction** (captured at mount from a previous click, should be frozen) vs. **exit direction** (determined by the current click, should be dynamic).
+
+**The solution:** A wrapper component (`SlideWrapper`) that froze entry direction at mount via `useState + location.state`, while keeping exit direction as a dynamic prop from the parent. This forced me to think deeply about React's lifecycle:
+
+- Why refs mutate dangerously across instances in async scenarios
+- Why `useState` with an initializer freezes values _per-instance_ at mount
+- How `key` changes trigger mount/unmount cycles that reset state
+- The precise timing of when each component captures its data
+
+**What I'm taking away:** I could have stopped at "it works now," but I didn't. I fully understood _why_ the solution worked, could explain it in detail, and can now recognize this pattern in other contexts (multi-instance state, ephemeral components, animations). More importantly, I learned that asking for help isn't a shortcut—it's a path to deeper understanding. The surface problem (animation glitch) pointed to something more fundamental worth learning.
+
 #### React patterns consolidated
 
 - **`useOutletContext`** to share state from `Layout` to route children via `<Outlet context={...} />` — lighter than Context or Redux for simple cases.
